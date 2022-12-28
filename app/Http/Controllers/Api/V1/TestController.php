@@ -104,15 +104,20 @@ class TestController extends Controller
 
       try{
 
-           $test = Test::findOrFail($id)
-            ->update();
+           $test = Test::find($id);
 
+              $test->first_name=$request->first_name;
+              $test->last_name=$request->last_name;
+              $test->email =$request->email;
+              $test->number =$request->number;
+              $result=$test->save();
 
            Cache::put('Test['. $id .']', $test, 15);
 
-           if($test){
+           if($result){
             return ["return "=>"your data update successfully"];
         }
+
       }
 
       catch( ModelNotFoundException $exception){
